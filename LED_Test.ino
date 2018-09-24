@@ -54,8 +54,7 @@ void loop() {
   } else if (loudness < loudMin) {
     loudMin = loudness;
   }
-
-  //Simple Snake Pattern
+  //change pattern selector to choose what pattern you want to do
   if (patternSelector == 0) {
     smoothwub();
   }
