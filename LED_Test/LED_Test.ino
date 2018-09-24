@@ -1,3 +1,4 @@
+//@author Charles Fee
 #include <FastLED.h>
 
 #define NUM_LEDS 100
