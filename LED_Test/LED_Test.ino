@@ -1,7 +1,7 @@
 //@author Charles Fee
 #include <FastLED.h>
 
-#define NUM_LEDS 100
+#define NUM_LEDS 50
 #define LED_PIN 2
 //Sound Sensor
 int loudness;
@@ -26,7 +26,7 @@ void setup() {
   leftifCounter = 0;
   rightifCounter = 0;
   loopCounter = 0;
-  patternSelector = 0;
+  patternSelector = 4;
   leftlastLEDUpdated = 51;
   rightlastLEDUpdated = 50;
   wubbifier = 0;
@@ -35,13 +35,11 @@ void setup() {
   for (int i = 0; i < NUM_LEDS; i++) {
     led[i] = CRGB(50, 0, 0);
   }
-  Serial.begin(115200);
 
   FastLED.show();
 }
 
 void loop() {
-  Serial.println(loudness);
   if (analogRead(0) > 245 && analogRead(0) < 295) {
     loudness = analogRead(0);
   }
@@ -83,6 +81,11 @@ void loop() {
   }
   if (patternSelector == 3) {
     seizurewub();
+  }
+  if (patternSelector == 4) {
+    if (loudness > (loudMax / 1.2)) {
+    colorChange();  
+    }
   }
 }
 
@@ -265,3 +268,16 @@ void smoothwub() {
   }
   delay(3);
 }
+void colorChange(){
+  if(leftifCounter >= 100){
+    int red = rand()%255;
+    int green = rand()%255;
+    int blue = rand()%255;
+    for (int i = 0; i < NUM_LEDS; i++) {
+    led[i] = CRGB(red, green, blue);
+    }
+    leftifCounter = 0;
+    FastLED.show();
+  }
+  leftifCounter++;
+  }
